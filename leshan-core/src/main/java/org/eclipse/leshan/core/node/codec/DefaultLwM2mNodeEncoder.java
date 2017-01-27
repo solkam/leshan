@@ -37,7 +37,8 @@ public class DefaultLwM2mNodeEncoder implements LwM2mNodeEncoder {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultLwM2mNodeEncoder.class);
 
     @Override
-    public byte[] encode(LwM2mNode node, ContentFormat format, LwM2mPath path, LwM2mModel model) {
+    public byte[] encode(LwM2mNode node, ContentFormat format, LwM2mPath path, LwM2mModel model)
+            throws CodecException, UnsupportedOperationException {
         Validate.notNull(node);
         Validate.notNull(format);
 
@@ -60,7 +61,7 @@ public class DefaultLwM2mNodeEncoder implements LwM2mNodeEncoder {
             encoded = LwM2mNodeJsonEncoder.encode(node, path, model);
             break;
         default:
-            throw new IllegalArgumentException("Cannot encode " + node + " with format " + format);
+            throw new UnsupportedOperationException("Cannot encode " + node + " with format " + format);
         }
 
         LOG.trace("Encoded node {}: {}", node, Arrays.toString(encoded));
@@ -69,7 +70,7 @@ public class DefaultLwM2mNodeEncoder implements LwM2mNodeEncoder {
 
     @Override
     public byte[] encodeTimestampedData(List<TimestampedLwM2mNode> timestampedNodes, ContentFormat format,
-            LwM2mPath path, LwM2mModel model) {
+            LwM2mPath path, LwM2mModel model) throws CodecException, UnsupportedOperationException {
         Validate.notEmpty(timestampedNodes);
         Validate.notNull(format);
 
@@ -81,7 +82,7 @@ public class DefaultLwM2mNodeEncoder implements LwM2mNodeEncoder {
             encoded = LwM2mNodeJsonEncoder.encodeTimestampedData(timestampedNodes, path, model);
             break;
         default:
-            throw new IllegalArgumentException("Cannot encode timestampedNode with format " + format);
+            throw new UnsupportedOperationException("Cannot encode timestampedNode with format " + format);
         }
 
         LOG.trace("Encoded node timestampedNode: {}", timestampedNodes, Arrays.toString(encoded));

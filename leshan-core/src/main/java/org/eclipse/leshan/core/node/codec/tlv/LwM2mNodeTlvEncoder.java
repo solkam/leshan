@@ -32,6 +32,7 @@ import org.eclipse.leshan.core.node.LwM2mObjectInstance;
 import org.eclipse.leshan.core.node.LwM2mPath;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.ObjectLink;
+import org.eclipse.leshan.core.node.codec.CodecException;
 import org.eclipse.leshan.core.node.codec.Lwm2mNodeEncoderUtil;
 import org.eclipse.leshan.tlv.Tlv;
 import org.eclipse.leshan.tlv.Tlv.TlvType;
@@ -47,7 +48,7 @@ public class LwM2mNodeTlvEncoder {
 
     private static final Logger LOG = LoggerFactory.getLogger(LwM2mNodeTlvEncoder.class);
 
-    public static byte[] encode(LwM2mNode node, LwM2mPath path, LwM2mModel model) {
+    public static byte[] encode(LwM2mNode node, LwM2mPath path, LwM2mModel model) throws CodecException {
         Validate.notNull(node);
         Validate.notNull(path);
         Validate.notNull(model);
@@ -185,7 +186,7 @@ public class LwM2mNodeTlvEncoder {
             case OBJLNK:
                 return TlvEncoder.encodeObjlnk((ObjectLink) value);
             default:
-                throw new IllegalArgumentException("Invalid value type: " + type);
+                throw new CodecException(String.format("Invalid value %s for type %s", value, type));
             }
         }
     }
