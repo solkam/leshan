@@ -35,10 +35,11 @@ public interface LwM2mNodeDecoder {
      * @param path the path of the node to build
      * @param model the collection of supported object models
      * @return the resulting node
-     * @throws CodecException
+     * @exception CodecException if there payload is malformed.
+     * @exception UnsupportedOperationException if content format is not supported.
      */
     LwM2mNode decode(byte[] content, ContentFormat format, LwM2mPath path, LwM2mModel model)
-            throws CodecException;
+            throws CodecException, UnsupportedOperationException;
 
     /**
      * Deserializes a binary content into a {@link LwM2mNode} of the expected type.
@@ -49,10 +50,11 @@ public interface LwM2mNodeDecoder {
      * @param model the collection of supported object models
      * @param nodeClass the class of the {@link LwM2mNode} to decode
      * @return the resulting node
-     * @throws CodecException
+     * @exception CodecException if there payload is malformed.
+     * @exception UnsupportedOperationException if content format is not supported.
      */
     <T extends LwM2mNode> T decode(byte[] content, ContentFormat format, LwM2mPath path, LwM2mModel model,
-            Class<T> nodeClass) throws CodecException;
+            Class<T> nodeClass) throws CodecException, UnsupportedOperationException;
 
     /**
      * Deserializes a binary content into a list of time-stamped {@link LwM2mNode} ordering by time-stamp.
@@ -63,10 +65,11 @@ public interface LwM2mNodeDecoder {
      * @param model the collection of supported object models
      * @param nodeClass the class of the {@link LwM2mNode} to decode
      * @return the resulting list of time-stamped {@link LwM2mNode} ordering by time-stamp
-     * @throws CodecException
+     * @exception CodecException if there payload is malformed.
+     * @exception UnsupportedOperationException if content format is not supported.
      */
     List<TimestampedLwM2mNode> decodeTimestampedData(byte[] content, ContentFormat format, LwM2mPath path,
-            LwM2mModel model) throws CodecException;
+            LwM2mModel model) throws CodecException, UnsupportedOperationException;
 
     /**
      * return true is the given {@link ContentFormat} is supported
